@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Licensure Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#4D701F;--orange:#FF8200;--ink:#1a1a1a;--gray:#585E5C;--line:#c9cfcb;--bg:#ffffff;--soft:#f3f6ee}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px 16px 40px;font-family:Montserrat,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+  .wrap{max-width:720px;margin:0 auto}
+  h1{font-size:1.5rem;color:var(--green);margin:0 0 6px}
+  h2{font-size:1.1rem;margin:28px 0 8px;padding:8px 12px;background:var(--soft);border-left:5px solid var(--green)}
+  p.intro{color:var(--gray);margin:0 0 6px}
+  .q{margin:16px 0}
+  label,legend{display:block;font-weight:600;margin-bottom:4px}
+  .hint{display:block;font-weight:400;font-size:.88rem;color:var(--gray);margin-bottom:6px}
+  input[type=date],input[type=text],select,textarea{width:100%;max-width:420px;padding:10px 12px;font:inherit;border:2px solid var(--gray);border-radius:8px;background:#fff;color:var(--ink)}
+  fieldset{border:0;padding:0;margin:16px 0}
+  .opt{display:flex;align-items:center;gap:8px;margin:6px 0}
+  .opt input{width:20px;height:20px}
+  .opt label{font-weight:400;margin:0}
+  input:focus,select:focus,button:focus,textarea:focus{outline:3px solid #000;outline-offset:2px}
+  .req{color:#9a2a0a}
+  a{color:#005239;font-weight:600;text-underline-offset:2px}
+  a:focus{outline:3px solid #000;outline-offset:2px}
+  .actions{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px}
+  button{font:inherit;font-weight:700;padding:12px 22px;border-radius:999px;border:2px solid #000;cursor:pointer}
+  .primary{background:var(--orange);color:#000}
+  .secondary{background:#fff;color:#000}
+  #msg{margin-top:14px;font-weight:600}
+  .err{color:#9a2a0a}
+  .ok{color:#2f5a12}
+  .fw{color:#9a2a0a;font-size:.88rem;font-weight:600;margin:4px 0 0}
+  .note{font-size:.85rem;color:var(--gray);margin-top:18px}
+  .secnav{margin:22px 0 6px;padding-top:6px}
+  .secmsg{margin:12px 0 0;padding:12px 14px;border:2px solid #9a2a0a;border-left:8px solid #9a2a0a;border-radius:8px;font-weight:600;color:#7a1f06}
+  .secmsg ul{margin:6px 0 0;padding-left:20px}
+  .secmsg li{margin:4px 0}
+  .secok{margin:12px 0 0;font-weight:700;color:#2f5a12}
+  .sug{color:var(--ink);font-size:.88rem;margin:4px 0 0}
+  .prog{font-weight:700;margin:0 0 16px;padding:10px 14px;background:var(--gray);color:var(--ink);border-radius:8px}
+  .done{margin:14px 0 0;padding:12px 14px;border:2px solid #000;border-left:8px solid #4d701f;border-radius:8px;font-weight:700}
+  [hidden]{display:none!important}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  /* ---- printable plan ---- */
+  #plan{max-width:720px;margin:0 auto}
+  #plan h1{color:#000;font-size:1.6rem;border-bottom:3px solid var(--orange);padding-bottom:6px}
+  #plan .meta{display:flex;flex-wrap:wrap;gap:6px 30px;margin:10px 0 4px}
+  #plan h2{font-size:1rem;margin:20px 0 6px;break-after:avoid}
+  #plan table{width:100%;border-collapse:collapse}
+  #plan td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.95rem}
+  #plan td.l{width:48%;font-weight:600}
+  #plan tr{break-inside:avoid}
+  .blank{display:inline-block;min-width:200px;border-bottom:1px solid #000;height:1.2em}
+  .foot{margin-top:18px;font-size:.82rem;color:var(--gray)}
+  .bar{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0 8px}
+  .lnk{display:block;font-weight:400;font-size:.8rem;color:var(--gray);word-break:break-all;margin-top:2px}
+  .lnk a{font-weight:400}
+  @page{margin:0.6in}
+  @media print{
+    body{padding:0}
+    .noprint{display:none!important}
+    #plan h2{background:#fff;border-left:5px solid #4D701F;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    a{color:#000;font-weight:400}
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+ <div class="noprint" id="formArea">
+  <h1 id="title">My Licensure Plan</h1>
+  <p class="intro" id="intro"></p>
+  <p class="intro" id="privacy"></p>
+  <p class="sr" id="live" role="status" aria-live="polite"></p>
+  <p class="err" id="loadnote" hidden></p>
+  <p class="prog" id="prog"></p>
+  <form id="f" novalidate>
+    <div id="sections"></div>
+    <div id="final" hidden>
+      <h2>Finish Your Plan</h2>
+      <div class="q"><label for="name">Your name <span class="req">*</span></label>
+        <input type="text" id="name" autocomplete="name"></div>
+      <p><button type="button" class="secondary" id="reset">Reset to suggested dates</button></p>
+      <div class="bar" id="barA">
+        <button type="button" class="primary" id="copyA">Step 1: Copy my plan</button>
+        <button type="button" class="primary" id="mailA" hidden>Step 2: Open email to my instructor</button>
+      </div>
+      <p class="done" id="doneA"></p>
+      <p class="note" id="noteA">Step 1 copies your plan form and shows it below. Step 2 then opens a new email to your instructor. Click in the body of the email and paste (Ctrl+V on Windows, Cmd+V on Mac, or touch and hold on a phone). Add your own email address to the Cc line to keep a copy, then press Send.</p>
+    </div>
+  </form>
+  <div id="status" class="noprint">
+    <p id="msg" role="status" aria-live="polite"></p>
+  </div>
+ </div>
+
+ <section id="plan" hidden aria-label="My plan form">
+  <div id="planBody"></div>
+  <div class="bar noprint" id="barB">
+    <button type="button" class="primary" id="copyB">Step 1: Copy my plan</button>
+    <button type="button" class="primary" id="mailB" hidden>Step 2: Open email to my instructor</button>
+    <button type="button" class="secondary" id="hide">Hide plan</button>
+  </div>
+ </section>
+</main>
+
+<script>
+/* ===== EDIT THESE TWO LINES (optional: paste your published Google Sheet CSV links) ===== */
+var SHEET_CSV_URL    = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTtDJtwzbXPTqBci8-B28nz7SQCmyY_65piqm2iavRiQwkK4bOSGug0FvHzyXY1ZU_1469ye2cyrtQm/pub?gid=1161996026&single=true&output=csv";   // "Form Fields" tab, published to the web as CSV
+var SETTINGS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTtDJtwzbXPTqBci8-B28nz7SQCmyY_65piqm2iavRiQwkK4bOSGug0FvHzyXY1ZU_1469ye2cyrtQm/pub?gid=1638962897&single=true&output=csv";   // "Settings" tab, published to the web as CSV
+/* ======================================================================================= */
+
+/* Built-in copy of the questions. Used if the sheet links above are blank or can't be reached. */
+var DEFAULT_FIELDS = [
+ {
+  "order": 1,
+  "section": "Section 1: Start Here",
+  "section_note": "",
+  "id": "state",
+  "label": "Which state are you applying to for your first license?",
+  "plan_label": "State for first license",
+  "type": "select",
+  "options": "Tennessee|Mississippi|Arkansas|Another state",
+  "required": "Y",
+  "hint": "",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 2,
+  "section": "Section 1: Start Here",
+  "section_note": "",
+  "id": "otherstate",
+  "label": "If another state, which one?",
+  "plan_label": "Other state",
+  "type": "text",
+  "options": "",
+  "required": "N",
+  "hint": "",
+  "placeholder": "",
+  "show_if": "state=Another state",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 3,
+  "section": "Section 1: Start Here",
+  "section_note": "",
+  "id": "path",
+  "label": "Which testing pathway are you on?",
+  "plan_label": "Testing pathway",
+  "type": "radio",
+  "options": "Early testing|On-time testing|Not sure yet",
+  "required": "Y",
+  "hint": "",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 4,
+  "section": "Section 1: Start Here",
+  "section_note": "",
+  "id": "grad",
+  "label": "What is your graduation date?",
+  "plan_label": "Graduation date",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Your transcript must show that you graduated before the board can issue your license.",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 5,
+  "section": "Section 1: Start Here",
+  "section_note": "",
+  "id": "peat",
+  "label": "What is your PEAT date?",
+  "plan_label": "PEAT date",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Your program sets the PEAT schedule. Early testing needs a score of 625 or higher on Academic PEAT Form A.",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 6,
+  "section": "Section 1: Start Here",
+  "section_note": "",
+  "id": "npte",
+  "label": "What is your NPTE test date?",
+  "plan_label": "NPTE test date",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Open the [FSBPT NPTE dates and deadlines page](https://www.fsbpt.org/Secondary-Pages/Exam-Candidates/National-Exam-NPTE/Dates-and-Deadlines) to see the exam dates, then check the registration deadline before choosing.",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 7,
+  "section": "Section 2: Find Your Deadlines",
+  "section_note": "",
+  "id": "fsbptdl",
+  "label": "What is the FSBPT registration deadline for your test date?",
+  "plan_label": "FSBPT registration deadline (last resort)",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Open the [FSBPT NPTE dates and deadlines page](https://www.fsbpt.org/Secondary-Pages/Exam-Candidates/National-Exam-NPTE/Dates-and-Deadlines) and find the registration deadline listed for your exam.",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 8,
+  "section": "Section 2: Find Your Deadlines",
+  "section_note": "",
+  "id": "statedl",
+  "label": "What is your state board’s application deadline for taking the exam?",
+  "plan_label": "State board application deadline (last resort)",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Open your state board’s application page. Not sure where to find it? Use the [FSBPT licensing authorities contact page](https://www.fsbpt.org/Free-Resources/Licensing-Authorities-Contact-Information) (opens in a new tab) to find your board. Many boards need your application at least 15 days before their cutoff.",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 9,
+  "section": "Section 3: Your State Board’s Requirements",
+  "section_note": "Open your board’s official licensure page. Not sure where to find it? Use the [FSBPT licensing authorities contact page](https://www.fsbpt.org/Free-Resources/Licensing-Authorities-Contact-Information) (opens in a new tab) to find your board.",
+  "id": "url",
+  "label": "Paste the link to your board’s licensure page",
+  "plan_label": "Board website",
+  "type": "text",
+  "options": "",
+  "required": "Y",
+  "hint": "Save the official source so you can check it again later.",
+  "placeholder": "https://",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 10,
+  "section": "Section 3: Your State Board’s Requirements",
+  "section_note": "",
+  "id": "reviewed",
+  "label": "What date did you review it?",
+  "plan_label": "Date reviewed",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Requirements and fees can change, so record when you checked.",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 11,
+  "section": "Section 3: Your State Board’s Requirements",
+  "section_note": "",
+  "id": "fee",
+  "label": "What is the board’s application fee?",
+  "plan_label": "Application fee",
+  "type": "text",
+  "options": "",
+  "required": "Y",
+  "hint": "Include any extra fees, such as fingerprinting or the jurisprudence exam.",
+  "placeholder": "Example: $135",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 12,
+  "section": "Section 3: Your State Board’s Requirements",
+  "section_note": "",
+  "id": "proc",
+  "label": "How long does the board take to process an application?",
+  "plan_label": "Processing time",
+  "type": "text",
+  "options": "",
+  "required": "N",
+  "hint": "Write what the board says. Leave blank if it does not say.",
+  "placeholder": "Example: up to 60 days",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 13,
+  "section": "Section 3: Your State Board’s Requirements",
+  "section_note": "",
+  "id": "letter",
+  "label": "Does the board require a letter from your program director?",
+  "plan_label": "Program director letter required",
+  "type": "yesno",
+  "options": "",
+  "required": "Y",
+  "hint": "",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 14,
+  "section": "Section 3: Your State Board’s Requirements",
+  "section_note": "",
+  "id": "bg",
+  "label": "Does the board require fingerprinting or a background check?",
+  "plan_label": "Fingerprinting or background check required",
+  "type": "yesno",
+  "options": "",
+  "required": "Y",
+  "hint": "",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 15,
+  "section": "Section 3: Your State Board’s Requirements",
+  "section_note": "",
+  "id": "juris",
+  "label": "Does the board require a state jurisprudence exam?",
+  "plan_label": "State jurisprudence exam required",
+  "type": "yesno",
+  "options": "",
+  "required": "Y",
+  "hint": "",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 16,
+  "section": "Section 4: Your Target Dates",
+  "section_note": "These dates are filled in from your answers. Each one counts back from your test date and skips weekends. You can change any date.",
+  "id": "acc",
+  "label": "By what date will you request testing accommodations, if you need them?",
+  "plan_label": "Request accommodations (10–12 weeks before)",
+  "type": "date",
+  "options": "",
+  "required": "N",
+  "hint": "Suggested: 11 weeks before your test date (the guide says 10 to 12). Accommodations apply to the NPTE only. Leave blank if you don’t need them. Requests are made on the [FSBPT accommodations page](https://www.fsbpt.org/adadocs) (opens in a new tab). That page does not show dates.",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "npte",
+  "auto_offset": "-11w",
+  "auto_weekend": "back",
+  "check": "notpast",
+  "check_msg": ""
+ },
+ {
+  "order": 17,
+  "section": "Section 4: Your Target Dates",
+  "section_note": "",
+  "id": "t_bg",
+  "label": "By what date will you finish fingerprinting or the background check?",
+  "plan_label": "Finish fingerprinting or background check",
+  "type": "date",
+  "options": "",
+  "required": "N",
+  "hint": "Suggested: when you submit your board application (9 weeks before your test date).",
+  "placeholder": "",
+  "show_if": "bg=Yes",
+  "auto_from": "npte",
+  "auto_offset": "-9w",
+  "auto_weekend": "back",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 18,
+  "section": "Section 4: Your Target Dates",
+  "section_note": "",
+  "id": "t_juris",
+  "label": "By what date will you pass the state jurisprudence exam?",
+  "plan_label": "Pass state jurisprudence exam",
+  "type": "date",
+  "options": "",
+  "required": "N",
+  "hint": "Suggested: when you submit your board application (9 weeks before your test date).",
+  "placeholder": "",
+  "show_if": "juris=Yes",
+  "auto_from": "npte",
+  "auto_offset": "-9w",
+  "auto_weekend": "back",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 19,
+  "section": "Section 4: Your Target Dates",
+  "section_note": "",
+  "id": "statetarget",
+  "label": "By what date will you submit your state board application?",
+  "plan_label": "Submit state board application (8–10 weeks before)",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Suggested: 9 weeks before your test date (the guide says 8 to 10).",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "npte",
+  "auto_offset": "-9w",
+  "auto_weekend": "back",
+  "check": "before:statedl;notpast",
+  "check_msg": "This date is after your state board’s deadline. Pick an earlier date."
+ },
+ {
+  "order": 20,
+  "section": "Section 4: Your Target Dates",
+  "section_note": "",
+  "id": "fsbpttarget",
+  "label": "By what date will you register and pay FSBPT?",
+  "plan_label": "Register and pay FSBPT (about 7 weeks before)",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Suggested: 7 weeks before your test date. Check it against the deadline on the [FSBPT dates and deadlines page](https://www.fsbpt.org/Secondary-Pages/Exam-Candidates/National-Exam-NPTE/Dates-and-Deadlines).",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "npte",
+  "auto_offset": "-7w",
+  "auto_weekend": "back",
+  "check": "before:fsbptdl;notpast",
+  "check_msg": "This date is after the FSBPT deadline. Pick an earlier date."
+ },
+ {
+  "order": 21,
+  "section": "Section 4: Your Target Dates",
+  "section_note": "",
+  "id": "prom",
+  "label": "By what date will you reserve your Prometric seat?",
+  "plan_label": "Reserve Prometric seat (about 4 weeks before)",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Suggested: 4 weeks before your test date. Seats and times fill up. You reserve your seat on the [Prometric website](https://www.prometric.com/) (opens in a new tab) after you receive your ATT letter.",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "npte",
+  "auto_offset": "-4w",
+  "auto_weekend": "back",
+  "check": "notpast",
+  "check_msg": ""
+ },
+ {
+  "order": 22,
+  "section": "Section 4: Your Target Dates",
+  "section_note": "",
+  "id": "t_trans",
+  "label": "By what date will you request your transcript be sent to the board?",
+  "plan_label": "Request transcript sent to board",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Suggested: 5 days after your graduation date. It must show that you graduated. Request it from the [UTHSC Registrar](https://uthsc.edu/registrar/transcript-document-request/index.php) (opens in a new tab).",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "grad",
+  "auto_offset": "+5d",
+  "auto_weekend": "forward",
+  "check": "after:grad",
+  "check_msg": "Request your transcript after your graduation date so it shows your degree."
+ },
+ {
+  "order": 23,
+  "section": "Section 4: Your Target Dates",
+  "section_note": "",
+  "id": "t_check",
+  "label": "By what date will you confirm the board has your score and transcript?",
+  "plan_label": "Confirm board has score and transcript",
+  "type": "date",
+  "options": "",
+  "required": "Y",
+  "hint": "Suggested: 2 weeks after your test date. Scores go to the board about 1 week after your exam.",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "npte",
+  "auto_offset": "+14d",
+  "auto_weekend": "forward",
+  "check": "after:npte",
+  "check_msg": "Confirm your score after your test date."
+ },
+ {
+  "order": 24,
+  "section": "Section 5: Practicing in More Than One State (Optional)",
+  "section_note": "",
+  "id": "compact",
+  "label": "Do you want to practice in another state?",
+  "plan_label": "Want to practice in another state",
+  "type": "yesno",
+  "options": "",
+  "required": "N",
+  "hint": "The PT Compact lets a licensed PT apply for privileges in other member states. You need your first license before you can apply.",
+  "placeholder": "",
+  "show_if": "",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ },
+ {
+  "order": 25,
+  "section": "Section 5: Practicing in More Than One State (Optional)",
+  "section_note": "",
+  "id": "compactstates",
+  "label": "Which states are you considering?",
+  "plan_label": "States considering",
+  "type": "text",
+  "options": "",
+  "required": "N",
+  "hint": "Check the [PT Compact requirements](https://ptcompact.org/process-and-requirements/) (opens in a new tab).",
+  "placeholder": "",
+  "show_if": "compact=Yes",
+  "auto_from": "",
+  "auto_offset": "",
+  "auto_weekend": "",
+  "check": "",
+  "check_msg": ""
+ }
+];
+var DEFAULT_SETTINGS = {
+ "title": "My Licensure Plan",
+ "intro": "Answer the questions in each section. Answer the questions marked *, then press the button at the end of each section to open the next one. Enter target dates, not last-day deadlines, so you leave room for delays.",
+ "privacy": "Fields marked * are required. Nothing you type is saved or sent anywhere until you choose to email it. If you close this page, your answers are lost, so email or copy your plan before you leave.",
+ "instructor_email": "jgrave47@uthsc.edu",
+ "subject": "My Licensure Plan",
+ "plan_footer": "Dates, fees, and rules change. Check each date against the official FSBPT and state board websites before you rely on it."
+};
+
+/* ---------- helpers ---------- */
+function $(id){return document.getElementById(id);}
+function parseCSV(text){
+  var rows=[],row=[],cur="",q=false,i,c;
+  text=text.replace(/^﻿/,"");
+  for(i=0;i<text.length;i++){
+    c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+    else if(c==='"') q=true;
+    else if(c===","){row.push(cur);cur="";}
+    else if(c==="\n"||c==="\r"){ if(c==="\r"&&text[i+1]==="\n")i++; row.push(cur);cur=""; rows.push(row);row=[]; }
+    else cur+=c;
+  }
+  if(cur!==""||row.length){row.push(cur);rows.push(row);}
+  return rows.filter(function(r){return r.some(function(x){return String(x).trim()!=="";});});
+}
+function csvToObjects(text){
+  var rows=parseCSV(text); if(rows.length<2) return [];
+  var head=rows[0].map(function(h){return String(h).trim().toLowerCase();});
+  return rows.slice(1).map(function(r){var o={};head.forEach(function(h,i){o[h]=(r[i]||"").trim();});return o;});
+}
+function fetchText(url){
+  return new Promise(function(res,rej){
+    var ctl=("AbortController" in window)?new AbortController():null, t=setTimeout(function(){ if(ctl)ctl.abort(); rej(new Error("timeout")); },5000);
+    fetch(url,ctl?{signal:ctl.signal}:{}).then(function(r){ if(!r.ok) throw new Error("http "+r.status); return r.text(); })
+      .then(function(x){clearTimeout(t);res(x);},function(e){clearTimeout(t);rej(e);});
+  });
+}
+function linkify(el,text){            // turns [words](https://link) into links; everything else stays plain text
+  var re=/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,last=0,m;
+  while((m=re.exec(text))){
+    if(m.index>last) el.appendChild(document.createTextNode(text.slice(last,m.index)));
+    var a=document.createElement("a"); a.href=m[2]; a.target="_blank"; a.rel="noopener"; a.textContent=m[1]; el.appendChild(a);
+    last=re.lastIndex;
+  }
+  if(last<text.length) el.appendChild(document.createTextNode(text.slice(last)));
+}
+function extractLinks(text){ var out=[],re=/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,m; while((m=re.exec(text||''))) out.push({t:m[1],u:m[2]}); return out; }
+function mk(tag,cls,text){var e=document.createElement(tag); if(cls)e.className=cls; if(text!=null)e.textContent=text; return e;}
+function iso(d){return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2);}
+function fmt(v){ if(!v) return ""; var p=v.split("-"); var d=new Date(+p[0],+p[1]-1,+p[2]);
+  return d.toLocaleDateString("en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric"}); }
+function shiftDate(v,off,wk){
+  var m=/^([+-]?\d+)\s*([wd])$/i.exec(off||""); if(!m||!v) return "";
+  var n=parseInt(m[1],10)*(m[2].toLowerCase()==="w"?7:1);
+  var p=v.split("-"), d=new Date(+p[0],+p[1]-1,+p[2]); d.setDate(d.getDate()+n);
+  var day=d.getDay();
+  if(wk==="back"){ if(day===6) d.setDate(d.getDate()-1); if(day===0) d.setDate(d.getDate()-2); }
+  else if(wk==="forward"){ if(day===6) d.setDate(d.getDate()+2); if(day===0) d.setDate(d.getDate()+1); }
+  return iso(d);
+}
+
+/* ---------- state ---------- */
+var S={fields:[],sections:[],byId:{},settings:{},revealed:1,finalShown:false,touched:{}};
+
+function normalize(rows){
+  var out=[],seen={};
+  rows.forEach(function(r,i){
+    var id=(r.id||"").replace(/[^A-Za-z0-9_-]/g,"");
+    if(!id||!r.label||!r.type||seen[id]) return;
+    seen[id]=1;
+    var type=r.type.toLowerCase();
+    if(["date","text","select","radio","yesno","textarea"].indexOf(type)<0) return;
+    var opts=(r.options||"").split("|").map(function(x){return x.trim();}).filter(Boolean);
+    if(type==="yesno"&&!opts.length) opts=["Yes","No","Not sure yet"];
+    var ord=parseFloat(r.order); if(isNaN(ord)) ord=1000+i;
+    out.push({id:id,label:r.label,plan:r.plan_label||r.label,type:type,opts:opts,req:/^y/i.test(r.required||""),
+      hint:r.hint||"",ph:r.placeholder||"",showif:r.show_if||"",section:r.section||"Questions",note:r.section_note||"",
+      af:(r.auto_from||"").replace(/[^A-Za-z0-9_-]/g,""),ao:r.auto_offset||"",aw:(r.auto_weekend||"").toLowerCase(),
+      check:r.check||"",cmsg:r.check_msg||"",ord:ord,idx:i,links:extractLinks(r.hint)});
+  });
+  out.sort(function(a,b){return a.ord-b.ord||a.idx-b.idx;});
+  return out;
+}
+function group(fields){
+  var secs=[],map={};
+  fields.forEach(function(f){
+    if(!map[f.section]){map[f.section]={name:f.section,note:"",fields:[]};secs.push(map[f.section]);}
+    var s=map[f.section]; if(!s.note&&f.note) s.note=f.note; s.fields.push(f);
+  });
+  secs.forEach(function(sec){
+    var first=sec.fields[0], seen={}, all=extractLinks(sec.note).concat(first.links);
+    first.links=all.filter(function(l){ if(seen[l.u]) return false; seen[l.u]=1; return true; });
+  });
+  return secs;
+}
+
+/* ---------- values ---------- */
+function getVal(id){
+  var f=S.byId[id]; if(!f) return "";
+  if(f.type==="radio"||f.type==="yesno"){ var r=document.querySelector('input[name="n_'+id+'"]:checked'); return r?r.value:""; }
+  var el=$("f_"+id); return el?(el.value||"").trim():"";
+}
+function visible(f){
+  if(!f.showif) return true;
+  var m=/^([A-Za-z0-9_-]+)\s*(!?=)\s*(.*)$/.exec(f.showif); if(!m) return true;
+  var ctl=S.byId[m[1]]; var v=ctl&&visible(ctl)?getVal(m[1]).toLowerCase():"";
+  var list=m[3].split("|").map(function(x){return x.trim().toLowerCase();});
+  var hit=list.indexOf(v)>-1;
+  return m[2]==="="?hit:!hit;
+}
+
+/* ---------- build the form ---------- */
+function build(){
+  var host=$("sections"); host.innerHTML="";
+  S.sections.forEach(function(sec,si){
+    var box=mk("div"); box.id="sec_"+si; if(si>0) box.hidden=true;
+    box.appendChild(mk("h2",null,sec.name));
+    if(sec.note){var p=mk("p","intro"); linkify(p,sec.note); box.appendChild(p);}
+    sec.fields.forEach(function(f){
+      var wrap=mk("div","q"); wrap.id="w_"+f.id;
+      var hintEl=null;
+      if(f.hint){hintEl=mk("span","hint"); hintEl.id="h_"+f.id; linkify(hintEl,f.hint);}
+      function labelText(parent){ parent.appendChild(document.createTextNode(f.label+" ")); if(f.req){var s=mk("span","req","*"); s.setAttribute("aria-hidden","true"); parent.appendChild(s); parent.appendChild(mk("span","sr","(required)"));} }
+      if(f.type==="radio"||f.type==="yesno"){
+        var fs=mk("fieldset"); var lg=mk("legend"); labelText(lg); fs.appendChild(lg);
+        if(hintEl) fs.appendChild(hintEl);
+        f.opts.forEach(function(o,k){
+          var d=mk("div","opt"), inp=document.createElement("input"); inp.type="radio"; inp.name="n_"+f.id; inp.id="f_"+f.id+"_"+k; inp.value=o;
+          var lb=mk("label",null,o); lb.setAttribute("for",inp.id); d.appendChild(inp); d.appendChild(lb); fs.appendChild(d);
+        });
+        wrap.appendChild(fs);
+      } else {
+        var lb=mk("label"); lb.setAttribute("for","f_"+f.id); labelText(lb);
+        if(hintEl) lb.appendChild(hintEl);
+        wrap.appendChild(lb);
+        var el;
+        if(f.type==="select"){ el=document.createElement("select"); var o0=mk("option",null,"Choose one"); o0.value=""; el.appendChild(o0); f.opts.forEach(function(o){var oo=mk("option",null,o); oo.value=o; el.appendChild(oo);}); }
+        else if(f.type==="textarea"){ el=document.createElement("textarea"); el.rows=3; }
+        else { el=document.createElement("input"); el.type=(f.type==="date")?"date":"text"; if(f.ph) el.placeholder=f.ph; }
+        el.id="f_"+f.id; if(f.req) el.setAttribute("aria-required","true");
+        wrap.appendChild(el);
+      }
+      var w=mk("p","fw"); w.id="w2_"+f.id; w.setAttribute("role","status"); w.hidden=true; wrap.appendChild(w);
+      var sg=mk("p","sug"); sg.id="w3_"+f.id; sg.hidden=true; wrap.appendChild(sg);
+      box.appendChild(wrap);
+    });
+    var nav=mk("div","secnav"); nav.id="nav_"+si; 
+    var nbtn=mk("button","primary",(si<S.sections.length-1)?("Continue to Section "+(si+2)):"Finish my plan"); nbtn.type="button"; nbtn.id="next_"+si; nbtn.setAttribute("data-next",String(si));
+    var nmsg=mk("div"); nmsg.id="sm_"+si; nmsg.setAttribute("role","status"); nmsg.setAttribute("aria-live","polite");
+    nav.appendChild(nbtn); nav.appendChild(nmsg); box.appendChild(nav);
+    host.appendChild(box);
+  });
+}
+
+/* ---------- logic ---------- */
+function recompute(force){
+  for(var pass=0;pass<3;pass++){
+    S.fields.forEach(function(f){
+      if(!f.af||!f.ao) return;
+      if(!force&&S.touched[f.id]) return;
+      var a=getVal(f.af); if(!a) return;
+      var v=shiftDate(a,f.ao,f.aw); var el=$("f_"+f.id);
+      if(v&&el) el.value=v;
+    });
+  }
+}
+function updateVisibility(){
+  S.fields.forEach(function(f){ var w=$("w_"+f.id); if(w) w.hidden=!visible(f); });
+}
+function short(v){ if(!v) return ""; var p=v.split("-"); var d=new Date(+p[0],+p[1]-1,+p[2]);
+  return d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",year:"numeric"}); }
+function offWords(off,wk){
+  var m=/^([+-]?)(\d+)\s*([wd])$/i.exec(off||""); if(!m) return "";
+  var n=m[2]+(m[3].toLowerCase()==="w"?(m[2]==="1"?" week":" weeks"):(m[2]==="1"?" day":" days"));
+  return n+(m[1]==="-"?" before":" after")+(wk?" (moved to a weekday)":"");
+}
+function suggestion(f){
+  if(!f.af||!f.ao) return null;
+  var bv=getVal(f.af); if(!bv) return null;
+  var sv=shiftDate(bv,f.ao,f.aw); if(!sv) return null;
+  var bf=S.byId[f.af];
+  return {date:sv, text:"The suggested date is "+short(sv)+", which is "+offWords(f.ao,f.aw)+" your "+(bf?lc(bf.plan):"earlier date")+" ("+short(bv)+")."};
+}
+function warnings(){
+  var today=iso(new Date());
+  S.fields.forEach(function(f){
+    var out=$("w2_"+f.id), sg=$("w3_"+f.id); if(!out) return;
+    var msg="", v=getVal(f.id), sug=suggestion(f);
+    if(v&&f.check&&visible(f)){
+      f.check.split(";").forEach(function(c){
+        c=c.trim(); var m=/^(before|after):(.+)$/.exec(c), other, ov, base;
+        if(m){ other=S.byId[m[2]]; ov=other?getVal(other.id):"";
+          if(ov&&((m[1]==="before"&&v>ov)||(m[1]==="after"&&v<=ov))){
+            base=f.cmsg||("This date should be "+m[1]+" your "+lc(other.plan)+".");
+            msg=msg||(base+" You entered "+short(v)+". Your "+lc(other.plan)+" is "+short(ov)+".");
+          }
+        } else if(c==="notpast"&&v<today){ msg=msg||("This date has already passed. You entered "+short(v)+". Move it to a date that is still ahead."); }
+      });
+      if(msg&&sug) msg+=" "+sug.text+" Change this date, or change the date it is based on.";
+    }
+    out.textContent=msg; out.hidden=!msg;
+    if(sg){
+      var show=!msg&&v&&sug&&sug.date!==v&&visible(f);
+      sg.textContent=show?("You changed this date. "+sug.text+" Use \"Reset to suggested dates\" at the end to go back."):"";
+      sg.hidden=!show;
+    }
+  });
+}
+function sectionDone(si){
+  return S.sections[si].fields.every(function(f){ return !f.req||!visible(f)||!!getVal(f.id); });
+}
+function sectionProblems(si){
+  var probs=[];
+  S.sections[si].fields.forEach(function(f){
+    if(!visible(f)) return;
+    if(f.req&&!getVal(f.id)) probs.push("<b>"+esc(f.plan)+"</b>: this question needs an answer.");
+    else { var w=$("w2_"+f.id); if(w&&w.textContent) probs.push("<b>"+esc(f.plan)+"</b>: "+esc(w.textContent)); }
+  });
+  return probs;
+}
+function lc(t){ t=String(t); return /^[A-Z][a-z]/.test(t)?t.charAt(0).toLowerCase()+t.slice(1):t; }
+function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function goTo(el){
+  if(!el) return;
+  function go(){
+    var r=el.getBoundingClientRect(), h=window.innerHeight||document.documentElement.clientHeight||0;
+    if(h&&r.top>h*0.55) window.scrollBy(0,r.top-h*0.3);   // only scrolls down, and only if the new section is low on the screen
+  }
+  go(); setTimeout(go,150);
+}
+function goNext(si){
+  var box=$("sm_"+si), probs=sectionProblems(si);
+  if(probs.length){
+    box.className="secmsg";
+    box.innerHTML="Please fix "+(probs.length===1?"this":"these")+" before you continue:<ul><li>"+probs.join("</li><li>")+"</li></ul>";
+    return;
+  }
+  box.className="secok"; box.textContent="Section "+(si+1)+" is complete. "+(si<S.sections.length-1?"Section "+(si+2)+" is open right below.":"Your plan buttons are open right below.");
+  $("next_"+si).hidden=true;
+  var target;
+  if(si<S.sections.length-1){
+    if(S.revealed<si+2){ $("sec_"+(si+1)).hidden=false; S.revealed=si+2; }
+    target=$("sec_"+(si+1)); $("live").textContent="Section "+(si+2)+" is now open below.";
+  } else {
+    $("final").hidden=false; S.finalShown=true; target=$("final"); $("live").textContent="Your plan buttons are now open below.";
+  }
+  progress();
+  goTo(target);
+}
+function progress(){
+  var n=S.sections.length, p=$("prog");
+  if(S.finalShown) p.textContent="All "+n+" sections are done. Your plan buttons are at the bottom of this page.";
+  else p.textContent="Section "+S.revealed+" of "+n+". Answer every question marked *, then press the button at the end of the section to open the next one.";
+}
+function refresh(){ if(S.copied&&S.finalShown){ S.copied=false; $("mailA").hidden=true; $("mailB").hidden=true; if(!$("plan").hidden){ say("You changed an answer, so your plan was updated. Press Step 1 to copy it again.","err"); } }
+   updateVisibility(); recompute(false); warnings(); progress(); if(!$("plan").hidden) buildPlan(); }
+
+/* ---------- output ---------- */
+function planData(){
+  var name=($("name").value||"").trim();
+  var secs=S.sections.map(function(sec){
+    return {name:sec.name,rows:sec.fields.filter(visible).map(function(f){ return {f:f,v:getVal(f.id)}; })};
+  });
+  return {name:name,secs:secs};
+}
+function missingList(){
+  var miss=[];
+  S.fields.forEach(function(f){ if(f.req&&visible(f)&&!getVal(f.id)) miss.push(lc(f.plan)); });
+  if(!($("name").value||"").trim()) miss.push("your name");
+  return miss;
+}
+function toText(){
+  var d=planData(), L=[];
+  L.push(($("title").textContent||"MY PLAN").toUpperCase()); L.push("Name: "+d.name); L.push("");
+  d.secs.forEach(function(s){
+    if(!s.rows.length) return;
+    L.push(s.name.toUpperCase());
+    s.rows.forEach(function(r){
+      var v=r.v; if(r.f.type==="date") v=v?fmt(v):"";
+      L.push(r.f.plan+": "+(v||"Not provided"));
+      r.f.links.forEach(function(l){ L.push("   Helpful link - "+l.t+": "+l.u); });
+    });
+    L.push("");
+  });
+  if(S.settings.plan_footer) L.push(S.settings.plan_footer);
+  return L.join("\n").replace(/\s+$/,"");
+}
+function buildPlan(){
+  var d=planData(), B=$("planBody"); B.innerHTML="";
+  B.appendChild(mk("h1",null,$("title").textContent));
+  var meta=mk("div","meta"); var n=mk("div"); n.appendChild(mk("strong",null,"Name: "));
+  if(d.name) n.appendChild(document.createTextNode(d.name)); else n.appendChild(mk("span","blank"));
+  meta.appendChild(n); var dt=mk("div"); dt.appendChild(mk("strong",null,"Date prepared: ")); dt.appendChild(document.createTextNode(new Date().toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}))); meta.appendChild(dt); B.appendChild(meta);
+  d.secs.forEach(function(s){
+    if(!s.rows.length) return;
+    B.appendChild(mk("h2",null,s.name));
+    var t=document.createElement("table"), tb=document.createElement("tbody");
+    s.rows.forEach(function(r){
+      var tr=document.createElement("tr"), l=mk("td","l",r.f.plan), c=document.createElement("td");
+      r.f.links.forEach(function(k){ var sp=mk("span","lnk"); sp.appendChild(document.createTextNode(k.t+": ")); var a=document.createElement("a"); a.href=k.u; a.target="_blank"; a.rel="noopener"; a.textContent=k.u; sp.appendChild(a); l.appendChild(sp); });
+      if(r.f.type==="radio"||r.f.type==="yesno"){ c.textContent=r.f.opts.map(function(o){return (o===r.v?"\u2612 ":"\u2610 ")+o;}).join("    "); }
+      else if(r.v){ c.textContent=(r.f.type==="date")?fmt(r.v):r.v; }
+      else c.appendChild(mk("span","blank"));
+      tr.appendChild(l); tr.appendChild(c); tb.appendChild(tr);
+    });
+    t.appendChild(tb); B.appendChild(t);
+  });
+  if(S.settings.plan_footer) B.appendChild(mk("p","foot",S.settings.plan_footer));
+}
+function say(t,cls){var m=$("msg");m.textContent=t;m.className=cls||"";}
+function statusAfter(el){ var st=$("status"); el.parentNode.insertBefore(st,el.nextSibling); }
+function guard(){ var m=missingList(); if(m.length){say("Please complete: "+m.join(", ")+".","err");return false;} return true; }
+function copyPlan(){
+  var node=$("planBody"), ok=false, sel=window.getSelection(), rng=document.createRange();
+  rng.selectNodeContents(node); sel.removeAllRanges(); sel.addRange(rng);
+  try{ ok=document.execCommand("copy"); }catch(e){ ok=false; }
+  return ok;
+}
+function doCopy(bar){
+  statusAfter(bar);
+  if(!guard()) return;
+  showPlan();
+  var ok=copyPlan(), em=S.settings.instructor_email||"";
+  S.copied=true; $("mailA").hidden=false; $("mailB").hidden=false;
+  say(ok
+    ? "Your plan is copied and shown below. Now press Step 2 to open your email, then paste it into the message."
+    : "Your plan is shown and selected below. Copy it (Ctrl+C on Windows, Cmd+C on Mac), then press Step 2 to open your email and paste it into the message.","ok");
+}
+function openMail(bar){
+  statusAfter(bar);
+  var em=S.settings.instructor_email||"";
+  var a=document.createElement("a");
+  a.href="mailto:"+encodeURIComponent(em)+"?subject="+encodeURIComponent(S.settings.subject||"My Plan")+"&body="+encodeURIComponent("Paste your plan here (Ctrl+V on Windows, Cmd+V on Mac).\n\n");
+  a.style.display="none"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  say("We tried to open your email. Click in the message, delete the paste note, and paste your plan (Ctrl+V on Windows, Cmd+V on Mac). If no email opened, start a new email to "+em+" and paste.","");
+}
+function showPlan(){ buildPlan(); $("plan").hidden=false;}
+
+function wire(){
+  var f=$("f");
+  f.addEventListener("input",function(e){
+    var id=(e.target.id||"").replace(/^f_/,"").replace(/_\d+$/,"");
+    if(S.byId[id]&&S.byId[id].af) S.touched[id]=true;
+    refresh();
+  });
+  f.addEventListener("change",refresh);
+  f.addEventListener("click",function(e){ var t=e.target, g=t.getAttribute&&t.getAttribute("data-next"); if(g!==null&&g!==undefined) goNext(parseInt(g,10)); });
+  f.addEventListener("submit",function(e){e.preventDefault();});
+  $("reset").addEventListener("click",function(){ recompute(true); S.touched={}; warnings(); if(!$("plan").hidden) buildPlan(); statusAfter($("reset").parentNode); say("Target dates reset to the suggested dates.","ok"); });
+  $("copyA").addEventListener("click",function(){ doCopy($("barA")); });
+  $("copyB").addEventListener("click",function(){ doCopy($("barB")); });
+  $("mailA").addEventListener("click",function(){ openMail($("barA")); });
+  $("mailB").addEventListener("click",function(){ openMail($("barB")); });
+  $("hide").addEventListener("click",function(){ $("plan").hidden=true; });
+}
+
+/* ---------- start ---------- */
+function start(fields,settings,note){
+  S.settings=settings;
+  S.fields=normalize(fields); S.fields.forEach(function(f){S.byId[f.id]=f;});
+  S.sections=group(S.fields);
+  document.title=settings.title||"My Plan"; $("title").textContent=settings.title||"My Plan";
+  linkify($("intro"),settings.intro||""); linkify($("privacy"),(settings.privacy||"").replace(/\*/g,"*"));
+  if(note){$("loadnote").textContent=note;$("loadnote").hidden=false;}
+  var dn=settings.after_note||"Your plan is ready. Email it to your instructor or save a copy before you move on. This form is not connected to the course, so the Continue button below it does not check your answers.";
+  $("doneA").textContent=dn; build(); wire(); refresh();
+}
+function settingsFrom(rows){
+  var s={}; for(var k in DEFAULT_SETTINGS) s[k]=DEFAULT_SETTINGS[k];
+  rows.forEach(function(r){ if(r.key) s[r.key.trim()]=r.value||""; });
+  return s;
+}
+(function(){
+  if(!SHEET_CSV_URL){ start(DEFAULT_FIELDS,DEFAULT_SETTINGS,""); return; }
+  var p1=fetchText(SHEET_CSV_URL).then(csvToObjects);
+  var p2=SETTINGS_CSV_URL?fetchText(SETTINGS_CSV_URL).then(csvToObjects).catch(function(){return null;}):Promise.resolve(null);
+  Promise.all([p1,p2]).then(function(a){
+    var fields=a[0]; if(!fields||!fields.length) throw new Error("empty");
+    start(fields,a[1]?settingsFrom(a[1]):DEFAULT_SETTINGS,"");
+  }).catch(function(){ start(DEFAULT_FIELDS,DEFAULT_SETTINGS,""); });
+})();
+</script>
+</body>
+</html>
